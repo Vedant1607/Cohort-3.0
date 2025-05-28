@@ -1,0 +1,81 @@
+* {
+    font-family:  "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+}
+body {
+    background-color: #090a0e;
+    font-size: 200;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.navBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background-color: #090a0e;
+    padding: 10px 20px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.topLink {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+input {
+    padding: 5px;
+}
+
+button {
+    background-color: rgb(0, 132, 255);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logo-img {
+    padding-right: 5px;
+    height: 40px;
+}
+
+input {
+    background-color: var(--header-foreground);
+    color: var(--header-foreground);
+    border-radius: 5px;
+    border-style:solid;
+}
+
+.center-part {
+    display: flex;
+    justify-content: space-around;
+}
+
+.editor-img {
+    width: 700px;
+    border-radius: 10px;
+}
