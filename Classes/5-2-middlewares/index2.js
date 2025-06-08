@@ -7,7 +7,7 @@ const app = express();
 // app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors({
-    domains:["http://localhost:3000/sum"]
+    domains:"http://localhost:3000/sum"
 }));
 
 // A way to host both front end and backend on the same server

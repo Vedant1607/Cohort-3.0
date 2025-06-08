@@ -10,5 +10,9 @@
   {
     "id": 2,
     "data": "Study Python"
+  },
+  {
+    "id": 0,
+    "data": "Hello"
   }
 ]

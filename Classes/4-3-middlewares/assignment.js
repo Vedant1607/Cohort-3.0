@@ -21,7 +21,7 @@ app.get('/requestCount',function(req,res){
 
 
 // Create a 
-/*
+
 let numberOfRequestForUser = {};
 setInterval(()=>{
     numberOfRequestForUser = {}
@@ -46,8 +46,9 @@ app.get("/",function(req,res){
     res.json({
         msg:numberOfRequestForUser
     })
-})*/
+})
 
+/*
 // Error Count
 let errorCount = 0;
 
@@ -60,5 +61,5 @@ app.use(function(err, req ,res ,next) {
     errorCount++;
     res.status(500).send({error:err.message});
 })
-
+*/
 app.listen(3000);
