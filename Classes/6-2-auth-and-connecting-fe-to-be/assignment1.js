@@ -13,6 +13,10 @@ const logger = function (req, res, next) {
     next();
 }
 
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/public/index.html");
+})
+
 app.post('/signup', logger, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -63,7 +67,7 @@ app.post('/signin', logger, (req, res) => {
         res.status(400).send({
             msg:"Wrong credentials"
         });
-        
+
     }
 })
 
