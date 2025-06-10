@@ -6,65 +6,116 @@
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
 
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+
     <script>
+        async function renderContent() {
+            const token = await localStorage.getItem("token");
+
+            if (token) {
+                await getUserInformation();
+            } else {
+                showAuthForms();
+            }
+        }
+
+        function showAuthForms() {
+            document.getElementById("auth-forms").classList.remove("hidden");
+            document.getElementById("user-section").classList.add("hidden");
+        }
+
+        function showUserSection() {
+            document.getElementById("user-section").classList.remove("hidden");
+            document.getElementById("auth-forms").classList.add("hidden");
+        }
         async function signup(){
             const username = document.getElementById('signup-username').value;
             const password = document.getElementById('signup-password').value;
 
-            await axios.post("http://localhost:3000/signup", {
-                username: username,
-                password: password,
-            });
-            alert("You are signed in");
+            try {
+                await axios.post("http://localhost:3000/signup", {
+                    username: username,
+                    password: password,
+                });
+                alert("You are signed in");
+            } catch (err) {
+                alert("Signup failed: " + err.response);
+            }
         }
 
         async function signin(){
             const username = document.getElementById('signin-username').value;
             const password = document.getElementById('signin-password').value;
 
-            const response = await axios.post("http://localhost:3000/signin", {
-                username: username,
-                password: password,
-            });
+            try {
+                const response = await axios.post("http://localhost:3000/signin", {
+                    username: username,
+                    password: password,
+                });
+    
+                localStorage.setItem("token", response.data.jwt)
+    
+                alert("you are signed in");
 
-            localStorage.setItem("token", response.data.jwt)
-
-            alert("you are signed in");
+                renderContent();
+            } catch (err) {
+                alert("Signin failed: " + err.response);
+            }
         }
         
         async function getUserInformation(){
-            const response = await axios.get("http://localhost:3000/me", {
-                headers: {
-                    token:localStorage.getItem("token")
-                }
-            });
-
-            document.getElementById("information").innerHTML = "Username: " + response.data.username + " Password: " + response.data.password;
-            alert("you are signed in");
+            try {
+                const response = await axios.get("http://localhost:3000/me", {
+                    headers: {
+                        token:localStorage.getItem("token")
+                    }
+                });
+    
+                document.getElementById("information").innerHTML = "Username: " + response.data.username + " Password: " + response.data.password;
+                alert("you are signed in");
+                showUserSection();
+            } catch(err) {
+                localStorage.removeItem("token");
+                showAuthForms();
+                alert(err);
+            }
         }
         getUserInformation()
+
+        function logout () {
+            localStorage.removeItem("token");
+        }
         
     </script>
 </head>
 <body>
-    <div>
-        Signup
-        <input id="signup-username" type="text" name="username" placeholder="username">
-        <input id="signup-password" type="password" name="password" placeholder="password">
-        <button onclick="signup()">Submit</button>
+    <div id="auth-forms">
+        <div class="form-section">
+            Signup
+            <input id="signup-username" type="text" name="username" placeholder="username">
+            <input id="signup-password" type="password" name="password" placeholder="password">
+            <button onclick="signup()">Submit</button>
+        </div>
+        <div class="form-section">
+            Signin
+            <input id="signin-username" type="text" name="username" placeholder="username">
+            <input id="signin-password" type="password" name="password" placeholder="password">
+            <button onclick="signin()">Submit</button>
+        </div>
     </div>
-    <div>
-        Signin
-        <input id="signin-username" type="text" name="username" placeholder="username">
-        <input id="signin-password" type="password" name="password" placeholder="password">
-        <button onclick="signin()">Submit</button>
-    </div>
-    <div>
-        User Information:
-        <div id="information"></div>
-    </div>
-    <div>
-        <button onclick="logout()">Logout</button>
+
+    <div id="user-section" class="hidden">
+        <div class="form-section">
+            User Information:
+            <div id="information"></div>
+        </div>
+        <div>
+            <button onclick="logout()">Logout</button>
+        </div>
     </div>
 </body>
 </html>
