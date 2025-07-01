@@ -2,10 +2,9 @@ import express from 'express';
 import { UserModel, TodoModel } from './db.js';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import { JWT_SECRET, auth } from './auth.js';
 
 await mongoose.connect("mongodb+srv://sinhavedant0705:hezydZQgstLI0Ma7@cluster0.pn2ykoe.mongodb.net/todo-app-database")
-
-const JWT_SECRET = "legionSecret";
 
 const app = express();
 app.use(express.json());
@@ -38,8 +37,10 @@ app.post("/signin", async function (req, res) {
     console.log(user);
 
     if (user) {
+        console.log(user._id);
+        console.log(user._id.toString());
         const token = jwt.sign({
-            id: user._id,
+            id: user._id.toString(),
         }, JWT_SECRET);
 
         res.json({
@@ -53,8 +54,29 @@ app.post("/signin", async function (req, res) {
     }
 });
 
-app.get("todos", function (req, res) {
+app.post('/todo', auth, function (req, res) {
+    const userId = req.userId;
+    const title = req.body.title;
 
+    TodoModel.create({
+        title,
+        userId
+    })
+    
+    res.json({
+        userId: userId
+    });
+});
+
+app.get("todos", auth, async function (req, res) {
+    const userId = req.userId;
+    const todos = await TodoModel.find({
+        userId: userId
+    })
+
+    res.json({
+        todos
+    })
 });
 
 app.listen(3000, () => {
