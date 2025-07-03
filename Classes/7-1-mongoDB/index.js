@@ -74,6 +74,8 @@ app.get("todos", auth, async function (req, res) {
         userId: userId
     })
 
+    console.log(todos);
+
     res.json({
         todos
     })
