@@ -1,31 +1,74 @@
 import React, { useState } from 'react';
+import { PostComponent } from './Post';
 
 function App() {
 
+  const [posts, setPosts] = useState([]);
+  // everytime posts state changes, app component re-renders
+
+  const postComponents = posts.map(post => <PostComponent
+    name={post.name}
+    subtitle={post.subtitle}
+    time={post.time}
+    image={post.image}
+    description={post.description}
+  />)
+
+  function addPost(){
+    setPosts([...posts,{
+    name:"harkirat",
+    subtitle:"10000 followers",
+    time:"2h ago",
+    image:"freeCodeCamp.jpg",
+    description:"What to know how to win big? Check out how these folks won $6000 in bounties."
+    }])
+  }
+  
   return (
+    <div style={{background:"#dfe6e9", height:"100vh"}}>
+      <button onClick={addPost}>Add Post</button>
+      <div style={{ display: "flex", justifyContent:"center"}}>
+        <div>
+          <div>
+            {postComponents}
+            <br/> 
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+// Notification Count Component
+/*
+return (
     <div style={{ backgroundColor: "#bdc3c7", height: "100vh" }}>
       <ToggleMessage/>
       <ToggleMessage/>
       <ToggleMessage/>
     </div>
   )
-}
-
+*/
+/*
 const ToggleMessage = () => {
-    const [isVisible, setIsVisible] = useState(false); // defining a new state variable
-    // When the value of a state variable changes,
-    // the component that uses the state variables re-renders
+  let [notificationCount, setNotificationCount] = useState(0);
 
-    return (
-        <div>
-            <button onClick={() => setIsVisible(!isVisible)}>
-                Toggle Message
-            </button>
-            {isVisible && <p>This message is conditionally rendered!</p>}
-        </div>
-    );
+  console.log("re-render");
+  function increment() {
+    setNotificationCount(notificationCount + 1);
+  }
+
+  return (
+      <div>
+          <button onClick={increment}>
+              Increase count
+          </button>
+          {notificationCount}
+      </div>
+  );
 };
-
+*/
 
 // 1. starting a react project locally, components, conditional rendering
 /*{ <div style={{ display: "flex", justifyContent:"center"}}>
@@ -49,8 +92,8 @@ const ToggleMessage = () => {
             />
             <br/> 
           </div>
-        // </div>}*/
-      // </div>
+        // </div>}
+      // </div>*/
 
 // const style = { width: 200, backgroundColor:"white", borderRadius:10, borderColor:"grey", borderWidth:1,
 //   padding:20
