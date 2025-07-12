@@ -12,7 +12,7 @@ function App() {
             name={"harkirat"}
             subtitle={"20 followers"}
             time={"2m ago"}
-            image={"/public/freeCodeCamp.jpg"}
+            image={"/freeCodeCamp.jpg"}
             description={"What to know how to win big? Check out how these folks won $6000 in bounties."}
             />
             <br/> 
