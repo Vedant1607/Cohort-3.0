@@ -6,7 +6,7 @@ function App() {
   const [currentPost, setCurrentPost] = useState(1);
   const postTitle = usePostTitle();
 
-  const { finalData, loading } = useFetch(`https://jsonplaceholder.typicode.com/posts/${currentPost}`);
+  const { finalData, loading } = useFetch(`https://jsonplaceholder.typicode.com/posts/${currentPost}`, 10);
 
   if (loading) {
     return <div>
