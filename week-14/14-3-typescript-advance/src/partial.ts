@@ -8,8 +8,12 @@ interface User {
 
 type UpdateProps = Pick<User, 'name' | 'age' | 'email'>
 
-function updateUser(updatedProps:UpdateProps){
+type UpdatePropsOptional = Partial <UpdateProps>
+
+function updateUser(updatedProps:UpdatePropsOptional){
     // hit the databse to update the user
     console.log(updatedProps)
 }
-updateUser({name:"hello",age:20,email:"hello@"})
+updateUser({ // it doesn't throw an error since all arguments are optional
+    name:"yo",
+})
