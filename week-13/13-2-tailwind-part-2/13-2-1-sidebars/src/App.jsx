@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import SidebarClass1 from './components/1-basic-project'
 import SidebarTransition from './components/SidebarTransition'
@@ -7,6 +7,15 @@ import SideBarToggle from './components/SideBarToggle'
 
 function App() {
   const [sideBarOpen, setSideBarOpen] = useState(true);
+  const isDesktop = useMediaQuery("(min-width:768px");
+
+  useEffect(() => {
+    if (isDesktop === false){
+      setSideBarOpen(false);
+    } else {
+      setSideBarOpen(true);
+    }
+  }, [isDesktop])
 
   return (
     <div className='flex'>
@@ -16,6 +25,22 @@ function App() {
   )
 }
 
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    if (media.matches !== matches) {
+      setMatches(media.matches);
+    }
+    const listener = () => setMatches(media.matches);
+    media.addListener(listener);
+
+    return () => media.removeListener(listener);
+  }, [matches, query]);
+
+  return matches;
+}
 
 function Sidebar({sideBarOpen, setSideBarOpen}){
 
@@ -49,14 +74,14 @@ function Sidebar({sideBarOpen, setSideBarOpen}){
 function MainContent ({sideBarOpen}) {
   return (
     <div className='w-full'>
-      <div className='h-50 bg-black'></div>
+      <div className='h-50 bg-black hidden md:block'></div>
 
-      <div className='grid grid-cols-11 gap-8'>
-        <div className='h-96 rounded-2xl shadow-lg bg-red-600 col-span-2 -translate-y-24'></div>
+      <div className='grid grid-cols-11 gap-8 p-8'>
+        <div className='h-96 rounded-2xl shadow-lg bg-red-600 md:col-span-2 -translate-y-24 col-span-11 hidden md:block'></div>
 
-        <div className='h-96 rounded-2xl shadow-lg bg-green-600 col-span-6'></div>
+        <div className='h-96 rounded-2xl shadow-lg bg-green-600 md:col-span-6 col-span-11'></div>
 
-        <div className='h-96 rounded-2xl shadow-lg bg-yellow-600 col-span-3'></div>
+        <div className='h-96 rounded-2xl shadow-lg bg-yellow-600 md:col-span-3 col-span-11'></div>
       </div>
     </div>
   )
