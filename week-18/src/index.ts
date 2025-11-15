@@ -1,4 +1,4 @@
-import { PrismaClient } from '../dist/generated/prisma/index.js'
+import { PrismaClient } from "@prisma/client";
 
 const client = new PrismaClient()
 
@@ -28,9 +28,21 @@ async function updateUser(){
   console.log(user);
 }
 
+async function getTodos() {
+  const user = await client.user.findFirst({
+    where:{
+      id:1
+    },
+    include:{
+      todos: true
+    }
+  })
+  console.log(user);
+}
+
 main()
   .then(async () => {
-    await updateUser()
+    await getTodos()
     await client.$disconnect()
   })
   .catch(async (e) => {
