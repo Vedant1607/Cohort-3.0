@@ -24,13 +24,13 @@ export default function Home() {
         }}
       >
         <TextInput
-          onChange={() => alert("Hi")}
+          // onChange={() => alert("Hi")}
           size="small"
           placeholder="Enter room name"
         />
         <button
           onChange={() => {
-            router.push("/chat/123");
+            router.push("http://localhost:3000/chat/123");
           }}
         >
           Join room

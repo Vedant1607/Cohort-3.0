@@ -1,7 +1,7 @@
 interface PropType {
   placeholder: string;
   size: "big" | "small";
-  onChange: (e: any) => void;
+  onChange?: (e: any) => void;
 }
 
 export default function TextInput({ placeholder, size, onChange }: PropType) {
